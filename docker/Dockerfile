@@ -48,16 +48,16 @@ RUN .venv/bin/realms-wiki create_db
 # fix fontawesome css
 # RUN sed -i "s#/home/wiki/realms-wiki/realms/static/#/static/#g" /home/wiki/realms-wiki/realms/static/assets/*.css
 
-RUN . .venv/bin/activate && \
-    gunicorn \
-        --name realms-wiki \
-        --access-logfile - \
-        --error-logfile - \
-        --worker-class gevent \
-        --workers ${WORKERS} \
-        --bind 0.0.0.0:5000 \
-        --chdir /home/wiki/realms-wiki \
-        'realms:create_app()'
+# RUN . .venv/bin/activate && \
+#     gunicorn \
+#         --name realms-wiki \
+#         --access-logfile - \
+#         --error-logfile - \
+#         --worker-class gevent \
+#         --workers ${WORKERS} \
+#         --bind 0.0.0.0:5000 \
+#         --chdir /home/wiki/realms-wiki \
+#         'realms:create_app()'
         # && \
         # sed -i "s#/home/wiki/realms-wiki/realms/static/#/static/#g" /home/wiki/realms-wiki/realms/static/assets/*.css && \
         # fg
