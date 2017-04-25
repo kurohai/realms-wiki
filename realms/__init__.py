@@ -117,6 +117,7 @@ class Application(Flask):
 class Assets(Environment):
     default_filters = {'js': 'rjsmin', 'css': 'cleancss'}
     default_output = {'js': 'assets/%(version)s.js', 'css': 'assets/%(version)s.css'}
+    url = '/static/'
 
     def register(self, name, *args, **kwargs):
         ext = args[0].split('.')[-1]
@@ -187,6 +188,8 @@ def create_app(config=None):
     assets.init_app(app)
     search.init_app(app)
     ldap.init_app(app)
+    app.config['ASSETS_DEBUG'] = True
+
 
     db.Model = declarative_base(metaclass=HookModelMeta, cls=HookMixin)
 

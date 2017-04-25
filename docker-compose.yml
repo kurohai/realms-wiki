@@ -1,0 +1,10 @@
+version: '3'
+services:
+  realms:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8080:5000"
+    volumes:
+      - ./logs/realms:/var/log/nginx
