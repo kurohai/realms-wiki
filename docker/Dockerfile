@@ -9,6 +9,11 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
     npm install -g bower clean-css@3
 
 RUN useradd -ms /bin/bash wiki
+RUN mkdir -p /home/wiki/data/repo
+ADD ./wiki/ /home/wiki/data/repo/
+RUN chmod 777 -R /home/wiki
+RUN chown wiki:wiki -R /home/wiki
+RUN chmod g+wrxs -R /home/wiki
 
 USER wiki
 
@@ -31,15 +36,23 @@ ENV REALMS_ENV=docker
 ENV REALMS_WIKI_PATH=/home/wiki/data/repo
 ENV REALMS_DB_URI='sqlite:////home/wiki/data/wiki.db'
 
-RUN mkdir /home/wiki/data && touch /home/wiki/data/.a
-VOLUME /home/wiki/data
+RUN mkdir -p /home/wiki/data && touch /home/wiki/data/.a
+# VOLUME /home/wiki/data
 
 EXPOSE 5000
 
+
+
 RUN .venv/bin/realms-wiki create_db
 
-# fix fontawesome css
-# RUN sed -i "s#/home/wiki/realms-wiki/realms/static/#/static/#g" /home/wiki/realms-wiki/realms/static/assets/*.css
+# move this to entrypoint
+USER root
+ADD ./wiki/ /home/wiki/data/repo/
+RUN chmod 777 -R /home/wiki
+RUN chown wiki:wiki -R /home/wiki
+RUN chmod g+wrxs -R /home/wiki
+
+USER wiki
 
 CMD . .venv/bin/activate && \
     gunicorn \
@@ -50,7 +63,4 @@ CMD . .venv/bin/activate && \
         --workers ${WORKERS} \
         --bind 0.0.0.0:5000 \
         --chdir /home/wiki/realms-wiki \
-        'realms:create_app()' \
-        # && \
-        # sed -i "s#/home/wiki/realms-wiki/realms/static/#/static/#g" /home/wiki/realms-wiki/realms/static/assets/*.css && \
-        # fg
+        'realms:create_app()'
