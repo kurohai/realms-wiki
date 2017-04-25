@@ -38,6 +38,7 @@ EXPOSE 5000
 
 RUN mkdir -p /home/wiki/data/repo/
 ADD ./wiki/ /home/wiki/data/repo/
+RUN chmod 777 -R /home/wiki/data/repo/
 RUN .venv/bin/realms-wiki create_db
 
 # fix fontawesome css
