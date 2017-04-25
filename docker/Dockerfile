@@ -9,6 +9,10 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
     npm install -g bower clean-css@3
 
 RUN useradd -ms /bin/bash wiki
+RUN mkdir -p /home/wiki/data/repo
+RUN chmod 777 -R /home/wiki/data/repo
+RUN chown wiki:wiki -R /home/wiki/data/repo
+RUN chmod g+wrxs -R /home/wiki/data/repo
 
 USER wiki
 
@@ -36,13 +40,9 @@ VOLUME /home/wiki/data
 
 EXPOSE 5000
 
-USER root
-RUN mkdir -p /home/wiki/data/repo
-ADD ./wiki/ /home/wiki/data/repo/
-RUN chmod 777 -R /home/wiki/data/repo
-RUN chown wiki:wiki -R /home/wiki/data/repo
 
-USER wiki
+ADD ./wiki/ /home/wiki/data/repo/
+
 RUN .venv/bin/realms-wiki create_db
 
 # fix fontawesome css
