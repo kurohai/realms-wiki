@@ -36,9 +36,12 @@ VOLUME /home/wiki/data
 
 EXPOSE 5000
 
+USER root
 RUN mkdir -p /home/wiki/data/repo/
 ADD ./wiki/ /home/wiki/data/repo/
 RUN chmod 777 -R /home/wiki/data/repo/
+
+USER wiki
 RUN .venv/bin/realms-wiki create_db
 
 # fix fontawesome css
