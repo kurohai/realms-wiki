@@ -10,9 +10,9 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
 
 RUN useradd -ms /bin/bash wiki
 RUN mkdir -p /home/wiki/data/repo
-RUN chmod 777 -R /home/wiki/data/repo
-RUN chown wiki:wiki -R /home/wiki/data/repo
-RUN chmod g+wrxs -R /home/wiki/data/repo
+RUN chmod 777 -R /home/wiki
+RUN chown wiki:wiki -R /home/wiki
+RUN chmod g+wrxs -R /home/wiki
 
 USER wiki
 
