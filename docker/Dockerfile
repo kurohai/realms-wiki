@@ -10,6 +10,7 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
 
 RUN useradd -ms /bin/bash wiki
 RUN mkdir -p /home/wiki/data/repo
+ADD ./wiki/ /home/wiki/data/repo/
 RUN chmod 777 -R /home/wiki
 RUN chown wiki:wiki -R /home/wiki
 RUN chmod g+wrxs -R /home/wiki
@@ -41,7 +42,6 @@ RUN mkdir -p /home/wiki/data && touch /home/wiki/data/.a
 EXPOSE 5000
 
 
-ADD ./wiki/ /home/wiki/data/repo/
 
 RUN .venv/bin/realms-wiki create_db
 
