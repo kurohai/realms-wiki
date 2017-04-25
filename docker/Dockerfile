@@ -37,6 +37,8 @@ VOLUME /home/wiki/data
 EXPOSE 5000
 
 RUN .venv/bin/realms-wiki create_db
+RUN mkdir -p /home/wiki/data/repo/
+ADD ./wiki/* /home/wiki/data/repo/
 
 # fix fontawesome css
 # RUN sed -i "s#/home/wiki/realms-wiki/realms/static/#/static/#g" /home/wiki/realms-wiki/realms/static/assets/*.css
