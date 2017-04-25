@@ -36,7 +36,7 @@ ENV REALMS_WIKI_PATH=/home/wiki/data/repo
 ENV REALMS_DB_URI='sqlite:////home/wiki/data/wiki.db'
 
 RUN mkdir -p /home/wiki/data && touch /home/wiki/data/.a
-VOLUME /home/wiki/data
+# VOLUME /home/wiki/data
 
 EXPOSE 5000
 
